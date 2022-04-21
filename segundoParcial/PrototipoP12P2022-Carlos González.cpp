@@ -78,6 +78,39 @@ void colegio::reportes(){
 }
 
 int main(){
-    colegio alumno;
-    alumno.menuPrincipal();
+    system ("cls");
+    string usuario, contrasena, config1, config2;
+    fstream usuariosContrasenas;
+    usuariosContrasenas.open("seguridad.dat",ios::app|ios::in|ios::binary);
+    if(!usuariosContrasenas){
+        cout<<"\n\t\tError";
+        cout<<"\n\t\tNo se encontro el archivo, asegurese de que el archivo este en la misma carpeta que el programa";
+    }
+    else{
+        cout << "\n\t\tIngrese su usuario: "; cin >> usuario;
+        cout << "\n\t\tIngrese su contrasena: "; cin >> contrasena;
+        usuariosContrasenas>>config1>>config2;
+            if (usuario=="admin" && contrasena =="123"){
+                fstream bienvenida;
+                string line, desicion;
+                bienvenida.open("bienvenidos.txt");
+                if(bienvenida.is_open()){
+                    cout << "\n";
+                    while( getline(bienvenida, line)){
+                        cout << "\t\t"<<line << endl;
+                    }
+                    bienvenida.close();
+                    }
+                cout << "\n\t\tPresione i para ingresar al --PROGRAMA-- : ";cin>>desicion;
+                if (desicion=="i"){
+                colegio alumno;
+                alumno.menuPrincipal();
+            }
+            else{
+                cout << "\n\t\t\tPermiso denegado\a";
+                exit(0);
+            }
+        }
+    }
 }
+
