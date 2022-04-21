@@ -9,7 +9,7 @@ using namespace std;
 class colegio
 {
 	private:
-		string id,name,phone,address, numCur, numSede, numFacultad;
+		string id,name,phone,address, numCur, numSede, numFacultad, numRep;
 	public:
 		void menuPrincipal();
 		void catalogos();
@@ -32,6 +32,11 @@ class colegio
 		void modifyCursos();
 		void searchCursos();
 		void deletCursos();
+        void insertReportes();
+		void displayReportes();
+		void modifyReportes();
+		void searchReportes();
+		void deletReportes();
 };
 
 void colegio::menuPrincipal(){
@@ -416,7 +421,7 @@ void colegio::modifyFacultad(){
 	fstream file,file1;
 	string busquedaFacultad;
 	int found=0;
-	cout<<"\n-------------------------Modificacion Detalles Sede-------------------------"<<endl;
+	cout<<"\n-------------------------Modificacion Detalles Facultad-------------------------"<<endl;
 	file.open("facultad.txt",ios::in);
 	if(!file)
 	{
@@ -538,11 +543,433 @@ void colegio::deletFacultad(){
 }
 
 void colegio::cursos(){
-    cout <<"hola";
+    int choice;
+	char x;
+	do
+    {
+	system("cls");
+	cout<<"\t\t\t---------------------------------"<<endl;
+	cout<<"\t\t\t|   BIENVENIDOS AL MENU CURSOS  |"<<endl;
+	cout<<"\t\t\t---------------------------------"<<endl;
+	cout<<"\t\t\t 1. Registrar"<<endl;
+	cout<<"\t\t\t 2. Mostrar"<<endl;
+	cout<<"\t\t\t 3. Modificar"<<endl;
+	cout<<"\t\t\t 4. Buscar"<<endl;
+	cout<<"\t\t\t 5. Eliminar"<<endl;
+	cout<<"\t\t\t 6. Regresar al MENU CATALOGOS"<<endl;
+	cout<<"\n\t\t\tIngresa tu Opcion: "; cin>>choice;
+    switch(choice)
+    {
+    case 1:
+    	insertCursos();
+		break;
+	case 2:
+		displayCursos();
+		break;
+	case 3:
+		modifyCursos();
+		break;
+    case 4:
+        searchCursos();
+        break;
+    case 5:
+        deletCursos();
+        break;
+    case 6:
+        return catalogos();
+	default:
+		cout<<"\n\t\t\t Opcion invalida...Por favor prueba otra vez..";
+	}
+	getch();
+    }
+    while(choice!= 6);
+}
+
+void colegio::insertCursos(){
+    system("cls");
+	fstream file;
+	cout<<"\n------------------------------------------------------------------------------------------------------------------------";
+	cout<<"\n-------------------------------------------------Agregar detalles Cursos -------------------------------------------------"<<endl;
+	cout<<"\t\t\tIngresa Numero Cursos        : ";
+	cin>>numCur;
+	cout<<"\t\t\tIngresa Nombre Cursos        : ";
+	cin>>name;
+	cout<<"\t\t\tIngresa Telefono Cursos      : ";
+	cin>>phone;
+	cout<<"\t\t\tIngresa Direccion Cursos     : ";
+	cin>>address;
+	file.open("cursos.txt", ios::app | ios::out);
+	file<<std::left<<std::setw(15)<< numCur <<std::left<<std::setw(15)<< name <<std::left<<std::setw(15)<< phone <<std::left<<std::setw(15)<< address << "\n";
+	file.close();
+}
+
+void colegio::displayCursos(){
+    system("cls");
+	fstream file;
+	int total=0;
+	cout<<"\n-------------------------Tabla de Detalles de Cursos -------------------------"<<endl;
+	file.open("cursos.txt",ios::in);
+	if(!file)
+	{
+		cout<<"\n\t\t\tNo hay información...";
+		file.close();
+	}
+	else
+	{
+		file >> numCur >> name >> phone >> address;
+		while(!file.eof())
+		{
+			total++;
+			cout<<"\n\n\t\t\t Numero Cursos: "<<numCur<<endl;
+			cout<<"\t\t\t Nombre Cursos: "<<name<<endl;
+			cout<<"\t\t\t Telefono Cursos: "<<phone<<endl;
+			cout<<"\t\t\t Direccion Cursos: "<<address<<endl;
+			file >> numCur >> name >> phone >> address;
+		}
+		if(total==0)
+		{
+			cout<<"\n\t\t\tNo hay informacion...";
+		}
+	}
+	file.close();
+}
+
+void colegio::modifyCursos(){
+    system("cls");
+	fstream file,file1;
+	string busquedaCursos;
+	int found=0;
+	cout<<"\n-------------------------Modificacion Detalles Cursos-------------------------"<<endl;
+	file.open("cursos.txt",ios::in);
+	if(!file)
+	{
+		cout<<"\n\t\t\tNo hay informacion..,";
+		file.close();
+	}
+	else
+	{
+		cout<<"\n Ingrese NUMERO del Curso que quiere modificar: ";
+		cin>>busquedaCursos;
+		file1.open("modCursos.txt",ios::app | ios::out);
+		file >> numCur >> name >> phone >> address;
+		while(!file.eof())
+		{
+			if(busquedaCursos!=numCur)
+			{
+			 file1<<std::left<<std::setw(15)<< numCur <<std::left<<std::setw(15)<< name <<std::left<<std::setw(15)<< phone <<std::left<<std::setw(15)<< address << "\n";
+			}
+			else
+			{
+				cout<<"\t\t\tIngrese Numero Curso: ";
+				cin>>numCur;
+				cout<<"\t\t\tIngrese Nombre Curso: ";
+				cin>>name;
+				cout<<"\t\t\tIngrese Telefono Curso: ";
+				cin>>phone;
+				cout<<"\t\t\tIngrese Direccion Curso: ";
+				cin>>address;
+				file1<<std::left<<std::setw(15)<< numCur <<std::left<<std::setw(15)<< name <<std::left<<std::setw(15)<< phone <<std::left<<std::setw(15)<< address << "\n";
+				found++;
+			}
+			file >> numCur >> name >> phone >> address;
+
+		}
+		file1.close();
+		file.close();
+		remove("cursos.txt");
+		rename("modCursos.txt","cursos.txt");
+	}
+}
+
+void colegio::searchCursos(){
+    system("cls");
+	fstream file;
+	int found=0;
+	file.open("cursos.txt",ios::in);
+	if(!file)
+	{
+		cout<<"\n-------------------------Datos del Curso buscado------------------------"<<endl;
+		cout<<"\n\t\t\tNo hay informacion...";
+	}
+	else
+	{
+		string busquedaCursos;
+		cout<<"\n-------------------------Datos del Curso buscado------------------------"<<endl;
+		cout<<"\nIngrese NUMERO del Curso que quiere buscar: ";
+		cin>>busquedaCursos;
+		file >> numCur >> name >> phone >> address;
+		while(!file.eof())
+		{
+			if(busquedaCursos==numCur)
+			{
+				cout<<"\n\n\t\t\t Numero de Curso: "<<numCur<<endl;
+				cout<<"\t\t\t Nombre Curso: "<<name<<endl;
+				cout<<"\t\t\t Telefono Curso: "<<phone<<endl;
+				cout<<"\t\t\t Direccion Curso: "<<address<<endl;
+				found++;
+			}
+			file >> numCur >> name >> phone >> address;
+		}
+		if(found==0)
+		{
+			cout<<"\n\t\t\t Facultad no encontrada...";
+		}
+		file.close();
+	}
+}
+
+void colegio::deletCursos(){
+    system("cls");
+	fstream file,file1;
+	string busquedaCursos;
+	int found=0;
+	cout<<"\n-------------------------Detalles de Curso a Borrar-------------------------"<<endl;
+	file.open("cursos.txt",ios::in);
+	if(!file)
+	{
+		cout<<"\n\t\t\tNo hay informacion...";
+		file.close();
+	}
+	else
+	{
+		cout<<"\n Ingrese el NUMERO del Curso que quiere borrar: ";
+		cin>>busquedaCursos;
+		file1.open("modCursos.txt",ios::app | ios::out);
+		file >> numCur >> name >> phone >> address;
+		while(!file.eof())
+		{
+			if(busquedaCursos!= numCur)
+			{
+				file1<<std::left<<std::setw(15)<< numCur <<std::left<<std::setw(15)<< name <<std::left<<std::setw(15)<< phone <<std::left<<std::setw(15)<< address << "\n";
+			}
+			else
+			{
+				found++;
+				cout << "\n\t\t\tBorrado de informacion exitoso";
+			}
+			file >> numCur >> name >> phone >> address;
+		}
+		if(found==0)
+		{
+			cout<<"\n\t\t\t Numero de Curso no encontrado...";
+		}
+		file1.close();
+		file.close();
+		remove("cursos.txt");
+		rename("modCursos.txt","cursos.txt");
+	}
 }
 
 void colegio::reportes(){
-    cout <<"hola";
+    int choice;
+	char x;
+	do
+    {
+	system("cls");
+	cout<<"\t\t\t---------------------------------"<<endl;
+	cout<<"\t\t\t|  BIENVENIDOS AL MENU REPORTES  |"<<endl;
+	cout<<"\t\t\t---------------------------------"<<endl;
+	cout<<"\t\t\t 1. Registrar"<<endl;
+	cout<<"\t\t\t 2. Mostrar"<<endl;
+	cout<<"\t\t\t 3. Modificar"<<endl;
+	cout<<"\t\t\t 4. Buscar"<<endl;
+	cout<<"\t\t\t 5. Eliminar"<<endl;
+	cout<<"\t\t\t 6. Regresar al MENU PRINCIPAL"<<endl;
+	cout<<"\n\t\t\tIngresa tu Opcion: "; cin>>choice;
+    switch(choice)
+    {
+    case 1:
+    	insertReportes();
+		break;
+	case 2:
+		displayReportes();
+		break;
+	case 3:
+		modifyReportes();
+		break;
+    case 4:
+        searchReportes();
+        break;
+    case 5:
+        deletReportes();
+        break;
+    case 6:
+        return menuPrincipal();
+	default:
+		cout<<"\n\t\t\t Opcion invalida...Por favor prueba otra vez..";
+	}
+	getch();
+    }
+    while(choice!= 6);
+}
+
+void colegio::insertReportes(){
+    system("cls");
+	fstream file;
+	cout<<"\n------------------------------------------------------------------------------------------------------------------------";
+	cout<<"\n-------------------------------------------------Agregar detalles Reportes -------------------------------------------------"<<endl;
+	cout<<"\t\t\tIngresa Numero Reporte                         : ";
+	cin>>numRep;
+	cout<<"\t\t\tIngresa Nombre de la persona a Reportar        : ";
+	cin>>name;
+	cout<<"\t\t\tIngrese descripcion del Reporte                :";
+	cin>>phone;
+	file.open("reportes.txt", ios::app | ios::out);
+	file<<std::left<<std::setw(15)<< numRep <<std::left<<std::setw(15)<< name <<std::left<<std::setw(50)<< phone <<"\n";
+	file.close();
+}
+
+void colegio::displayReportes(){
+    system("cls");
+	fstream file;
+	int total=0;
+	cout<<"\n-------------------------Tabla de Detalles de Reportes -------------------------"<<endl;
+	file.open("reportes.txt",ios::in);
+	if(!file)
+	{
+		cout<<"\n\t\t\tNo hay información...";
+		file.close();
+	}
+	else
+	{
+		file >> numRep >> name >> phone;
+		while(!file.eof())
+		{
+			total++;
+			cout<<"\n\n\t\t\t Numero Reporte: "<<numRep<<endl;
+			cout<<"\t\t\t Nombre de la persona a Reportar: "<<name<<endl;
+			cout<<"\t\t\t Descripcion del Reporte: "<<phone<<endl;
+			file >> numRep >> name >> phone;
+		}
+		if(total==0)
+		{
+			cout<<"\n\t\t\tNo hay informacion...";
+		}
+	}
+	file.close();
+}
+
+void colegio::modifyReportes(){
+    system("cls");
+	fstream file,file1;
+	string busquedaRep;
+	int found=0;
+	cout<<"\n-------------------------Modificacion Detalles Reportes-------------------------"<<endl;
+	file.open("reportes.txt",ios::in);
+	if(!file)
+	{
+		cout<<"\n\t\t\tNo hay informacion..,";
+		file.close();
+	}
+	else
+	{
+		cout<<"\n Ingrese NUMERO del Reporte que quiere modificar: ";
+		cin>>busquedaRep;
+		file1.open("modRep.txt",ios::app | ios::out);
+		file >> numRep >> name >> phone;
+		while(!file.eof())
+		{
+			if(busquedaRep!=numRep)
+			{
+			 file1<<std::left<<std::setw(15)<< numRep <<std::left<<std::setw(15)<< name <<std::left<<std::setw(50)<< phone << "\n";
+			}
+			else
+			{
+				cout<<"\t\t\tIngrese Numero Reporte: ";
+				cin>>numRep;
+				cout<<"\t\t\tIngrese Nombre de la persona a Reportar: ";
+				cin>>name;
+				cout<<"\t\t\tIngrese descripcion del Reporte: ";
+				cin>>phone;
+				file1<<std::left<<std::setw(15)<< numRep <<std::left<<std::setw(15)<< name <<std::left<<std::setw(50)<< phone << "\n";
+				found++;
+			}
+			file >> numRep >> name >> phone;
+
+		}
+		file1.close();
+		file.close();
+		remove("reportes.txt");
+		rename("modReportes.txt","reportes.txt");
+	}
+}
+
+void colegio::searchReportes(){
+    system("cls");
+	fstream file;
+	int found=0;
+	file.open("reportes.txt",ios::in);
+	if(!file)
+	{
+		cout<<"\n-------------------------Datos del Reporte buscado------------------------"<<endl;
+		cout<<"\n\t\t\tNo hay informacion...";
+	}
+	else
+	{
+		string busquedaRep;
+		cout<<"\n-------------------------Datos del Reporte buscado------------------------"<<endl;
+		cout<<"\nIngrese NUMERO del Reporte que quiere buscar: ";
+		cin>>busquedaRep;
+		file >> numRep >> name >> phone;
+		while(!file.eof())
+		{
+			if(busquedaRep==numRep)
+			{
+				cout<<"\n\n\t\t\t Numero de Reporte: "<<numRep<<endl;
+				cout<<"\t\t\t Nombre de la persona Reportada: "<<name<<endl;
+				cout<<"\t\t\t Descripcion Reporte: "<<phone<<endl;
+				found++;
+			}
+			file >> numRep >> name >> phone;
+		}
+		if(found==0)
+		{
+			cout<<"\n\t\t\t Facultad no encontrada...";
+		}
+		file.close();
+	}
+}
+
+void colegio::deletReportes(){
+    system("cls");
+	fstream file,file1;
+	string busquedaRep;
+	int found=0;
+	cout<<"\n-------------------------Detalles de Reporte a Borrar-------------------------"<<endl;
+	file.open("reportes.txt",ios::in);
+	if(!file)
+	{
+		cout<<"\n\t\t\tNo hay informacion...";
+		file.close();
+	}
+	else
+	{
+		cout<<"\n Ingrese el NUMERO del Reporte que quiere borrar: ";
+		cin>>busquedaRep;
+		file1.open("modReportes.txt",ios::app | ios::out);
+		file >> numRep >> name >> phone;
+		while(!file.eof())
+		{
+			if(busquedaRep!= numRep)
+			{
+				file1<<std::left<<std::setw(15)<< numRep <<std::left<<std::setw(15)<< name <<std::left<<std::setw(15)<< phone << "\n";
+			}
+			else
+			{
+				found++;
+				cout << "\n\t\t\tBorrado de informacion exitoso";
+			}
+			file >> numRep >> name >> phone;
+		}
+		if(found==0)
+		{
+			cout<<"\n\t\t\t Numero de Reporte no encontrado...";
+		}
+		file1.close();
+		file.close();
+		remove("reportes.txt");
+		rename("modReportes.txt","reportes.txt");
+	}
 }
 
 int main(){
