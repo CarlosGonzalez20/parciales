@@ -64,7 +64,7 @@ void colegio::menuPrincipal(){
 		exit(1);
 		break;
 	default:
-		cout<<"\n\t\t\t Opcion invalida...Por favor prueba otra vez..";
+		cout<<"\n\t\t\t Opcion invalida...Por favor prueba otra vez..\a";
 	}
 	getch();
     }
@@ -99,7 +99,7 @@ void colegio::catalogos(){
     case 4:
         return menuPrincipal();
 	default:
-		cout<<"\n\t\t\t Opcion invalida...Por favor prueba otra vez..";
+		cout<<"\n\t\t\t Opcion invalida...Por favor prueba otra vez..\a";
 	}
 	getch();
     }
@@ -142,7 +142,7 @@ void colegio::sedes(){
     case 6:
         return catalogos();
 	default:
-		cout<<"\n\t\t\t Opcion invalida...Por favor prueba otra vez..";
+		cout<<"\n\t\t\t Opcion invalida...Por favor prueba otra vez..\a";
 	}
 	getch();
     }
@@ -152,8 +152,8 @@ void colegio::sedes(){
 void colegio::insertSede(){
     system("cls");
 	fstream file;
-	cout<<"\n------------------------------------------------------------------------------------------------------------------------";
-	cout<<"\n-------------------------------------------------Agregar detalles Sede -------------------------------------------------"<<endl;
+	cout<<"\n\t------------------------------------------------------------------------------------------------------------------------";
+	cout<<"\n\t-------------------------------------------------Agregar detalles Sede -------------------------------------------------"<<endl;
 	cout<<"\t\t\tIngresa Numero Sede        : ";
 	cin>>numSede;
 	cout<<"\t\t\tIngresa Nombre Sede        : ";
@@ -171,11 +171,11 @@ void colegio::displaySede(){
     system("cls");
 	fstream file;
 	int total=0;
-	cout<<"\n-------------------------Tabla de Detalles de Sedes -------------------------"<<endl;
+	cout<<"\n\t-------------------------Tabla de Detalles de Sedes -------------------------"<<endl;
 	file.open("sede.txt",ios::in);
 	if(!file)
 	{
-		cout<<"\n\t\t\tNo hay información...";
+		cout<<"\n\t\t\tNo hay información...\a";
 		file.close();
 	}
 	else
@@ -192,7 +192,7 @@ void colegio::displaySede(){
 		}
 		if(total==0)
 		{
-			cout<<"\n\t\t\tNo hay informacion...";
+			cout<<"\n\t\t\tNo hay informacion...\a";
 		}
 	}
 	file.close();
@@ -203,16 +203,16 @@ void colegio::modifySede(){
 	fstream file,file1;
 	string busquedaSede;
 	int found=0;
-	cout<<"\n-------------------------Modificacion Detalles Sede-------------------------"<<endl;
+	cout<<"\n\t-------------------------Modificacion Detalles Sede-------------------------"<<endl;
 	file.open("sede.txt",ios::in);
 	if(!file)
 	{
-		cout<<"\n\t\t\tNo hay informacion..,";
+		cout<<"\n\t\t\tNo hay informacion...\a";
 		file.close();
 	}
 	else
 	{
-		cout<<"\n Ingrese NUMERO de la Sede que quiere modificar: ";
+		cout<<"\n\t\t\t Ingrese NUMERO de la Sede que quiere modificar: ";
 		cin>>busquedaSede;
 		file1.open("modSede.txt",ios::app | ios::out);
 		file >> numSede >> name >> phone >> address;
@@ -252,14 +252,14 @@ void colegio::searchSede(){
 	file.open("sede.txt",ios::in);
 	if(!file)
 	{
-		cout<<"\n-------------------------Datos de la Sede buscada------------------------"<<endl;
-		cout<<"\n\t\t\tNo hay informacion...";
+		cout<<"\n\t-------------------------Datos de la Sede buscada------------------------"<<endl;
+		cout<<"\n\t\t\tNo hay informacion...\a";
 	}
 	else
 	{
 		string busquedaSede;
-		cout<<"\n-------------------------Datos de la Sede buscada------------------------"<<endl;
-		cout<<"\nIngrese NUMERO de la Sede que quiere buscar: ";
+		cout<<"\n\t-------------------------Datos de la Sede buscada------------------------"<<endl;
+		cout<<"\n\t\t\tIngrese NUMERO de la Sede que quiere buscar: ";
 		cin>>busquedaSede;
 		file >> numSede >> name >> phone >> address;
 		while(!file.eof())
@@ -276,7 +276,7 @@ void colegio::searchSede(){
 		}
 		if(found==0)
 		{
-			cout<<"\n\t\t\t Sede no encontrada...";
+			cout<<"\n\t\t\t Sede no encontrada...\a";
 		}
 		file.close();
 	}
@@ -287,16 +287,16 @@ void colegio::deletSede(){
 	fstream file,file1;
 	string busquedaSede;
 	int found=0;
-	cout<<"\n-------------------------Detalles de Sede a Borrar-------------------------"<<endl;
+	cout<<"\n\t-------------------------Detalles de Sede a Borrar-------------------------"<<endl;
 	file.open("sede.txt",ios::in);
 	if(!file)
 	{
-		cout<<"\n\t\t\tNo hay informacion...";
+		cout<<"\n\t\t\tNo hay informacion...\a";
 		file.close();
 	}
 	else
 	{
-		cout<<"\n Ingrese el NUMERO de la Sede que quiere borrar: ";
+		cout<<"\n\t\t\t Ingrese el NUMERO de la Sede que quiere borrar: ";
 		cin>>busquedaSede;
 		file1.open("modSede.txt",ios::app | ios::out);
 		file >> numSede >> name >> phone >> address;
@@ -309,13 +309,13 @@ void colegio::deletSede(){
 			else
 			{
 				found++;
-				cout << "\n\t\t\tBorrado de informacion exitoso";
+				cout << "\n\t\t\tBorrado de informacion exitoso\a";
 			}
 			file >> numSede >> name >> phone >> address;
 		}
 		if(found==0)
 		{
-			cout<<"\n\t\t\t Numero de Sede no encontrado...";
+			cout<<"\n\t\t\t Numero de Sede no encontrado...\a";
 		}
 		file1.close();
 		file.close();
@@ -360,7 +360,7 @@ void colegio::facultades(){
     case 6:
         return catalogos();
 	default:
-		cout<<"\n\t\t\t Opcion invalida...Por favor prueba otra vez..";
+		cout<<"\n\t\t\t Opcion invalida...Por favor prueba otra vez..\a";
 	}
 	getch();
     }
@@ -370,8 +370,8 @@ void colegio::facultades(){
 void colegio::insertFacultad(){
     system("cls");
 	fstream file;
-	cout<<"\n------------------------------------------------------------------------------------------------------------------------";
-	cout<<"\n-------------------------------------------------Agregar detalles Facultad -------------------------------------------------"<<endl;
+	cout<<"\n\t------------------------------------------------------------------------------------------------------------------------";
+	cout<<"\n\t-------------------------------------------------Agregar detalles Facultad -------------------------------------------------"<<endl;
 	cout<<"\t\t\tIngresa Numero Facultad        : ";
 	cin>>numFacultad;
 	cout<<"\t\t\tIngresa Nombre Facultad        : ";
@@ -389,11 +389,11 @@ void colegio::displayFacultad(){
     system("cls");
 	fstream file;
 	int total=0;
-	cout<<"\n-------------------------Tabla de Detalles de Facultades -------------------------"<<endl;
+	cout<<"\n\t-------------------------Tabla de Detalles de Facultades -------------------------"<<endl;
 	file.open("facultad.txt",ios::in);
 	if(!file)
 	{
-		cout<<"\n\t\t\tNo hay información...";
+		cout<<"\n\t\t\tNo hay información...\a";
 		file.close();
 	}
 	else
@@ -410,7 +410,7 @@ void colegio::displayFacultad(){
 		}
 		if(total==0)
 		{
-			cout<<"\n\t\t\tNo hay informacion...";
+			cout<<"\n\t\t\tNo hay informacion...\a";
 		}
 	}
 	file.close();
@@ -421,16 +421,16 @@ void colegio::modifyFacultad(){
 	fstream file,file1;
 	string busquedaFacultad;
 	int found=0;
-	cout<<"\n-------------------------Modificacion Detalles Facultad-------------------------"<<endl;
+	cout<<"\n\t-------------------------Modificacion Detalles Facultad-------------------------"<<endl;
 	file.open("facultad.txt",ios::in);
 	if(!file)
 	{
-		cout<<"\n\t\t\tNo hay informacion..,";
+		cout<<"\n\t\t\tNo hay informacion...\a";
 		file.close();
 	}
 	else
 	{
-		cout<<"\n Ingrese NUMERO de la Facultad que quiere modificar: ";
+		cout<<"\n\t\t\t Ingrese NUMERO de la Facultad que quiere modificar: ";
 		cin>>busquedaFacultad;
 		file1.open("modFacultad.txt",ios::app | ios::out);
 		file >> numFacultad >> name >> phone >> address;
@@ -470,14 +470,14 @@ void colegio::searchFacultad(){
 	file.open("facultad.txt",ios::in);
 	if(!file)
 	{
-		cout<<"\n-------------------------Datos de la Faculta buscada------------------------"<<endl;
-		cout<<"\n\t\t\tNo hay informacion...";
+		cout<<"\n\t-------------------------Datos de la Faculta buscada------------------------"<<endl;
+		cout<<"\n\t\t\tNo hay informacion...\a";
 	}
 	else
 	{
 		string busquedaFacultad;
-		cout<<"\n-------------------------Datos de la Facultad buscada------------------------"<<endl;
-		cout<<"\nIngrese NUMERO de la Facultad que quiere buscar: ";
+		cout<<"\n\t-------------------------Datos de la Facultad buscada------------------------"<<endl;
+		cout<<"\n\t\t\tIngrese NUMERO de la Facultad que quiere buscar: ";
 		cin>>busquedaFacultad;
 		file >> numFacultad >> name >> phone >> address;
 		while(!file.eof())
@@ -494,7 +494,7 @@ void colegio::searchFacultad(){
 		}
 		if(found==0)
 		{
-			cout<<"\n\t\t\t Facultad no encontrada...";
+			cout<<"\n\t\t\t Facultad no encontrada...\a";
 		}
 		file.close();
 	}
@@ -505,16 +505,16 @@ void colegio::deletFacultad(){
 	fstream file,file1;
 	string busquedaFacultad;
 	int found=0;
-	cout<<"\n-------------------------Detalles de Facultad a Borrar-------------------------"<<endl;
+	cout<<"\n\t-------------------------Detalles de Facultad a Borrar-------------------------"<<endl;
 	file.open("facultad.txt",ios::in);
 	if(!file)
 	{
-		cout<<"\n\t\t\tNo hay informacion...";
+		cout<<"\n\t\t\tNo hay informacion...\a";
 		file.close();
 	}
 	else
 	{
-		cout<<"\n Ingrese el NUMERO de la Facultad que quiere borrar: ";
+		cout<<"\n\t\t\t Ingrese el NUMERO de la Facultad que quiere borrar: ";
 		cin>>busquedaFacultad;
 		file1.open("modFacultad.txt",ios::app | ios::out);
 		file >> numFacultad >> name >> phone >> address;
@@ -527,13 +527,13 @@ void colegio::deletFacultad(){
 			else
 			{
 				found++;
-				cout << "\n\t\t\tBorrado de informacion exitoso";
+				cout << "\n\t\t\tBorrado de informacion exitoso\a";
 			}
 			file >> numFacultad >> name >> phone >> address;
 		}
 		if(found==0)
 		{
-			cout<<"\n\t\t\t Numero de Facultad no encontrado...";
+			cout<<"\n\t\t\t Numero de Facultad no encontrado...\a";
 		}
 		file1.close();
 		file.close();
@@ -578,7 +578,7 @@ void colegio::cursos(){
     case 6:
         return catalogos();
 	default:
-		cout<<"\n\t\t\t Opcion invalida...Por favor prueba otra vez..";
+		cout<<"\n\t\t\t Opcion invalida...Por favor prueba otra vez..\a";
 	}
 	getch();
     }
@@ -588,8 +588,8 @@ void colegio::cursos(){
 void colegio::insertCursos(){
     system("cls");
 	fstream file;
-	cout<<"\n------------------------------------------------------------------------------------------------------------------------";
-	cout<<"\n-------------------------------------------------Agregar detalles Cursos -------------------------------------------------"<<endl;
+	cout<<"\n\t------------------------------------------------------------------------------------------------------------------------";
+	cout<<"\n\t-------------------------------------------------Agregar detalles Cursos -------------------------------------------------"<<endl;
 	cout<<"\t\t\tIngresa Numero Cursos        : ";
 	cin>>numCur;
 	cout<<"\t\t\tIngresa Nombre Cursos        : ";
@@ -607,11 +607,11 @@ void colegio::displayCursos(){
     system("cls");
 	fstream file;
 	int total=0;
-	cout<<"\n-------------------------Tabla de Detalles de Cursos -------------------------"<<endl;
+	cout<<"\n\t-------------------------Tabla de Detalles de Cursos -------------------------"<<endl;
 	file.open("cursos.txt",ios::in);
 	if(!file)
 	{
-		cout<<"\n\t\t\tNo hay información...";
+		cout<<"\n\t\t\tNo hay información...\a";
 		file.close();
 	}
 	else
@@ -628,7 +628,7 @@ void colegio::displayCursos(){
 		}
 		if(total==0)
 		{
-			cout<<"\n\t\t\tNo hay informacion...";
+			cout<<"\n\t\t\tNo hay informacion...\a";
 		}
 	}
 	file.close();
@@ -639,16 +639,16 @@ void colegio::modifyCursos(){
 	fstream file,file1;
 	string busquedaCursos;
 	int found=0;
-	cout<<"\n-------------------------Modificacion Detalles Cursos-------------------------"<<endl;
+	cout<<"\n\t-------------------------Modificacion Detalles Cursos-------------------------"<<endl;
 	file.open("cursos.txt",ios::in);
 	if(!file)
 	{
-		cout<<"\n\t\t\tNo hay informacion..,";
+		cout<<"\n\t\t\tNo hay informacion...\a";
 		file.close();
 	}
 	else
 	{
-		cout<<"\n Ingrese NUMERO del Curso que quiere modificar: ";
+		cout<<"\n\t\t\t Ingrese NUMERO del Curso que quiere modificar: ";
 		cin>>busquedaCursos;
 		file1.open("modCursos.txt",ios::app | ios::out);
 		file >> numCur >> name >> phone >> address;
@@ -688,14 +688,14 @@ void colegio::searchCursos(){
 	file.open("cursos.txt",ios::in);
 	if(!file)
 	{
-		cout<<"\n-------------------------Datos del Curso buscado------------------------"<<endl;
-		cout<<"\n\t\t\tNo hay informacion...";
+		cout<<"\n\t-------------------------Datos del Curso buscado------------------------"<<endl;
+		cout<<"\n\t\t\tNo hay informacion...\a";
 	}
 	else
 	{
 		string busquedaCursos;
-		cout<<"\n-------------------------Datos del Curso buscado------------------------"<<endl;
-		cout<<"\nIngrese NUMERO del Curso que quiere buscar: ";
+		cout<<"\n\t-------------------------Datos del Curso buscado------------------------"<<endl;
+		cout<<"\n\t\t\tIngrese NUMERO del Curso que quiere buscar: ";
 		cin>>busquedaCursos;
 		file >> numCur >> name >> phone >> address;
 		while(!file.eof())
@@ -712,7 +712,7 @@ void colegio::searchCursos(){
 		}
 		if(found==0)
 		{
-			cout<<"\n\t\t\t Facultad no encontrada...";
+			cout<<"\n\t\t\t Facultad no encontrada...\a";
 		}
 		file.close();
 	}
@@ -723,16 +723,16 @@ void colegio::deletCursos(){
 	fstream file,file1;
 	string busquedaCursos;
 	int found=0;
-	cout<<"\n-------------------------Detalles de Curso a Borrar-------------------------"<<endl;
+	cout<<"\n\t-------------------------Detalles de Curso a Borrar-------------------------"<<endl;
 	file.open("cursos.txt",ios::in);
 	if(!file)
 	{
-		cout<<"\n\t\t\tNo hay informacion...";
+		cout<<"\n\t\t\tNo hay informacion...\a";
 		file.close();
 	}
 	else
 	{
-		cout<<"\n Ingrese el NUMERO del Curso que quiere borrar: ";
+		cout<<"\n\t\t\t Ingrese el NUMERO del Curso que quiere borrar: ";
 		cin>>busquedaCursos;
 		file1.open("modCursos.txt",ios::app | ios::out);
 		file >> numCur >> name >> phone >> address;
@@ -745,13 +745,13 @@ void colegio::deletCursos(){
 			else
 			{
 				found++;
-				cout << "\n\t\t\tBorrado de informacion exitoso";
+				cout << "\n\t\t\tBorrado de informacion exitoso\a";
 			}
 			file >> numCur >> name >> phone >> address;
 		}
 		if(found==0)
 		{
-			cout<<"\n\t\t\t Numero de Curso no encontrado...";
+			cout<<"\n\t\t\t Numero de Curso no encontrado...\a";
 		}
 		file1.close();
 		file.close();
@@ -796,7 +796,7 @@ void colegio::reportes(){
     case 6:
         return menuPrincipal();
 	default:
-		cout<<"\n\t\t\t Opcion invalida...Por favor prueba otra vez..";
+		cout<<"\n\t\t\t Opcion invalida...Por favor prueba otra vez..\a";
 	}
 	getch();
     }
@@ -806,8 +806,8 @@ void colegio::reportes(){
 void colegio::insertReportes(){
     system("cls");
 	fstream file;
-	cout<<"\n------------------------------------------------------------------------------------------------------------------------";
-	cout<<"\n-------------------------------------------------Agregar detalles Reportes -------------------------------------------------"<<endl;
+	cout<<"\n\t------------------------------------------------------------------------------------------------------------------------";
+	cout<<"\n\t-------------------------------------------------Agregar detalles Reportes -------------------------------------------------"<<endl;
 	cout<<"\t\t\tIngresa Numero Reporte                         : ";
 	cin>>numRep;
 	cout<<"\t\t\tIngresa Nombre de la persona a Reportar        : ";
@@ -823,11 +823,11 @@ void colegio::displayReportes(){
     system("cls");
 	fstream file;
 	int total=0;
-	cout<<"\n-------------------------Tabla de Detalles de Reportes -------------------------"<<endl;
+	cout<<"\n\t-------------------------Tabla de Detalles de Reportes -------------------------"<<endl;
 	file.open("reportes.txt",ios::in);
 	if(!file)
 	{
-		cout<<"\n\t\t\tNo hay información...";
+		cout<<"\n\t\t\tNo hay información...\a";
 		file.close();
 	}
 	else
@@ -843,7 +843,7 @@ void colegio::displayReportes(){
 		}
 		if(total==0)
 		{
-			cout<<"\n\t\t\tNo hay informacion...";
+			cout<<"\n\t\t\tNo hay informacion...\a";
 		}
 	}
 	file.close();
@@ -854,16 +854,16 @@ void colegio::modifyReportes(){
 	fstream file,file1;
 	string busquedaRep;
 	int found=0;
-	cout<<"\n-------------------------Modificacion Detalles Reportes-------------------------"<<endl;
+	cout<<"\n\t-------------------------Modificacion Detalles Reportes-------------------------"<<endl;
 	file.open("reportes.txt",ios::in);
 	if(!file)
 	{
-		cout<<"\n\t\t\tNo hay informacion..,";
+		cout<<"\n\t\t\tNo hay informacion...\a";
 		file.close();
 	}
 	else
 	{
-		cout<<"\n Ingrese NUMERO del Reporte que quiere modificar: ";
+		cout<<"\n\t\t\t Ingrese NUMERO del Reporte que quiere modificar: ";
 		cin>>busquedaRep;
 		file1.open("modRep.txt",ios::app | ios::out);
 		file >> numRep >> name >> phone;
@@ -901,14 +901,14 @@ void colegio::searchReportes(){
 	file.open("reportes.txt",ios::in);
 	if(!file)
 	{
-		cout<<"\n-------------------------Datos del Reporte buscado------------------------"<<endl;
-		cout<<"\n\t\t\tNo hay informacion...";
+		cout<<"\n\t-------------------------Datos del Reporte buscado------------------------"<<endl;
+		cout<<"\n\t\t\tNo hay informacion...\a";
 	}
 	else
 	{
 		string busquedaRep;
-		cout<<"\n-------------------------Datos del Reporte buscado------------------------"<<endl;
-		cout<<"\nIngrese NUMERO del Reporte que quiere buscar: ";
+		cout<<"\n\t-------------------------Datos del Reporte buscado------------------------"<<endl;
+		cout<<"\n\t\t\tIngrese NUMERO del Reporte que quiere buscar: ";
 		cin>>busquedaRep;
 		file >> numRep >> name >> phone;
 		while(!file.eof())
@@ -924,7 +924,7 @@ void colegio::searchReportes(){
 		}
 		if(found==0)
 		{
-			cout<<"\n\t\t\t Facultad no encontrada...";
+			cout<<"\n\t\t\t Reporte no encontrado...\a";
 		}
 		file.close();
 	}
@@ -935,16 +935,16 @@ void colegio::deletReportes(){
 	fstream file,file1;
 	string busquedaRep;
 	int found=0;
-	cout<<"\n-------------------------Detalles de Reporte a Borrar-------------------------"<<endl;
+	cout<<"\n\t-------------------------Detalles de Reporte a Borrar-------------------------"<<endl;
 	file.open("reportes.txt",ios::in);
 	if(!file)
 	{
-		cout<<"\n\t\t\tNo hay informacion...";
+		cout<<"\n\t\t\tNo hay informacion...\a";
 		file.close();
 	}
 	else
 	{
-		cout<<"\n Ingrese el NUMERO del Reporte que quiere borrar: ";
+		cout<<"\n\t\t\t Ingrese el NUMERO del Reporte que quiere borrar: ";
 		cin>>busquedaRep;
 		file1.open("modReportes.txt",ios::app | ios::out);
 		file >> numRep >> name >> phone;
@@ -957,13 +957,13 @@ void colegio::deletReportes(){
 			else
 			{
 				found++;
-				cout << "\n\t\t\tBorrado de informacion exitoso";
+				cout << "\n\t\t\tBorrado de informacion exitoso\a";
 			}
 			file >> numRep >> name >> phone;
 		}
 		if(found==0)
 		{
-			cout<<"\n\t\t\t Numero de Reporte no encontrado...";
+			cout<<"\n\t\t\t Numero de Reporte no encontrado...\a";
 		}
 		file1.close();
 		file.close();
@@ -978,8 +978,8 @@ int main(){
     fstream usuariosContrasenas;
     usuariosContrasenas.open("seguridad.dat",ios::app|ios::in|ios::binary);
     if(!usuariosContrasenas){
-        cout<<"\n\t\tError";
-        cout<<"\n\t\tNo se encontro el archivo, asegurese de que el archivo este en la misma carpeta que el programa";
+        cout<<"\n\t\tError\a";
+        cout<<"\n\t\tNo se encontro el archivo, asegurese de que el archivo este en la misma carpeta que el programa\a";
     }
     else{
         cout << "\n\t\tIngrese su usuario: "; cin >> usuario;
