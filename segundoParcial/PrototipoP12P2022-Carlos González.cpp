@@ -362,7 +362,180 @@ void colegio::facultades(){
     while(choice!= 6);
 }
 
-void
+void colegio::insertFacultad(){
+    system("cls");
+	fstream file;
+	cout<<"\n------------------------------------------------------------------------------------------------------------------------";
+	cout<<"\n-------------------------------------------------Agregar detalles Facultad -------------------------------------------------"<<endl;
+	cout<<"\t\t\tIngresa Numero Facultad        : ";
+	cin>>numFacultad;
+	cout<<"\t\t\tIngresa Nombre Facultad        : ";
+	cin>>name;
+	cout<<"\t\t\tIngresa Telefono Facultad      : ";
+	cin>>phone;
+	cout<<"\t\t\tIngresa Direccion Facultad     : ";
+	cin>>address;
+	file.open("facultad.txt", ios::app | ios::out);
+	file<<std::left<<std::setw(15)<< numFacultad <<std::left<<std::setw(15)<< name <<std::left<<std::setw(15)<< phone <<std::left<<std::setw(15)<< address << "\n";
+	file.close();
+}
+
+void colegio::displayFacultad(){
+    system("cls");
+	fstream file;
+	int total=0;
+	cout<<"\n-------------------------Tabla de Detalles de Facultades -------------------------"<<endl;
+	file.open("facultad.txt",ios::in);
+	if(!file)
+	{
+		cout<<"\n\t\t\tNo hay información...";
+		file.close();
+	}
+	else
+	{
+		file >> numFacultad >> name >> phone >> address;
+		while(!file.eof())
+		{
+			total++;
+			cout<<"\n\n\t\t\t Numero Facultad: "<<numFacultad<<endl;
+			cout<<"\t\t\t Nombre Facultad: "<<name<<endl;
+			cout<<"\t\t\t Telefono Facultad: "<<phone<<endl;
+			cout<<"\t\t\t Direccion Facultad: "<<address<<endl;
+			file >> numFacultad >> name >> phone >> address;
+		}
+		if(total==0)
+		{
+			cout<<"\n\t\t\tNo hay informacion...";
+		}
+	}
+	file.close();
+}
+
+void colegio::modifyFacultad(){
+    system("cls");
+	fstream file,file1;
+	string busquedaFacultad;
+	int found=0;
+	cout<<"\n-------------------------Modificacion Detalles Sede-------------------------"<<endl;
+	file.open("facultad.txt",ios::in);
+	if(!file)
+	{
+		cout<<"\n\t\t\tNo hay informacion..,";
+		file.close();
+	}
+	else
+	{
+		cout<<"\n Ingrese NUMERO de la Facultad que quiere modificar: ";
+		cin>>busquedaFacultad;
+		file1.open("modFacultad.txt",ios::app | ios::out);
+		file >> numFacultad >> name >> phone >> address;
+		while(!file.eof())
+		{
+			if(busquedaFacultad!=numFacultad)
+			{
+			 file1<<std::left<<std::setw(15)<< numFacultad <<std::left<<std::setw(15)<< name <<std::left<<std::setw(15)<< phone <<std::left<<std::setw(15)<< address << "\n";
+			}
+			else
+			{
+				cout<<"\t\t\tIngrese Numero Facultad: ";
+				cin>>numFacultad;
+				cout<<"\t\t\tIngrese Nombre Facultad: ";
+				cin>>name;
+				cout<<"\t\t\tIngrese Telefono Facultad: ";
+				cin>>phone;
+				cout<<"\t\t\tIngrese Direccion Facultad: ";
+				cin>>address;
+				file1<<std::left<<std::setw(15)<< numFacultad <<std::left<<std::setw(15)<< name <<std::left<<std::setw(15)<< phone <<std::left<<std::setw(15)<< address << "\n";
+				found++;
+			}
+			file >> numFacultad >> name >> phone >> address;
+
+		}
+		file1.close();
+		file.close();
+		remove("facultad.txt");
+		rename("modFacultad.txt","facultad.txt");
+	}
+}
+
+void colegio::searchFacultad(){
+    system("cls");
+	fstream file;
+	int found=0;
+	file.open("facultad.txt",ios::in);
+	if(!file)
+	{
+		cout<<"\n-------------------------Datos de la Faculta buscada------------------------"<<endl;
+		cout<<"\n\t\t\tNo hay informacion...";
+	}
+	else
+	{
+		string busquedaFacultad;
+		cout<<"\n-------------------------Datos de la Facultad buscada------------------------"<<endl;
+		cout<<"\nIngrese NUMERO de la Facultad que quiere buscar: ";
+		cin>>busquedaFacultad;
+		file >> numFacultad >> name >> phone >> address;
+		while(!file.eof())
+		{
+			if(busquedaFacultad==numFacultad)
+			{
+				cout<<"\n\n\t\t\t Numero de Facultad: "<<numFacultad<<endl;
+				cout<<"\t\t\t Nombre Facultad: "<<name<<endl;
+				cout<<"\t\t\t Telefono Facultad: "<<phone<<endl;
+				cout<<"\t\t\t Direccion Facultad: "<<address<<endl;
+				found++;
+			}
+			file >> numFacultad >> name >> phone >> address;
+		}
+		if(found==0)
+		{
+			cout<<"\n\t\t\t Facultad no encontrada...";
+		}
+		file.close();
+	}
+}
+
+void colegio::deletFacultad(){
+    system("cls");
+	fstream file,file1;
+	string busquedaFacultad;
+	int found=0;
+	cout<<"\n-------------------------Detalles de Facultad a Borrar-------------------------"<<endl;
+	file.open("facultad.txt",ios::in);
+	if(!file)
+	{
+		cout<<"\n\t\t\tNo hay informacion...";
+		file.close();
+	}
+	else
+	{
+		cout<<"\n Ingrese el NUMERO de la Facultad que quiere borrar: ";
+		cin>>busquedaFacultad;
+		file1.open("modFacultad.txt",ios::app | ios::out);
+		file >> numFacultad >> name >> phone >> address;
+		while(!file.eof())
+		{
+			if(busquedaFacultad!= numFacultad)
+			{
+				file1<<std::left<<std::setw(15)<< numFacultad <<std::left<<std::setw(15)<< name <<std::left<<std::setw(15)<< phone <<std::left<<std::setw(15)<< address << "\n";
+			}
+			else
+			{
+				found++;
+				cout << "\n\t\t\tBorrado de informacion exitoso";
+			}
+			file >> numFacultad >> name >> phone >> address;
+		}
+		if(found==0)
+		{
+			cout<<"\n\t\t\t Numero de Facultad no encontrado...";
+		}
+		file1.close();
+		file.close();
+		remove("facultad.txt");
+		rename("modFacultad.txt","facultad.txt");
+	}
+}
 
 void colegio::cursos(){
     cout <<"hola";
