@@ -1222,6 +1222,83 @@ void laboratoriosMedicos::mostrarDatosLaboratorio(){
 }
 
 int main(){
-    laboratoriosMedicos prueba;
-    prueba.menuPrincipal();
-}
+    system ("cls");
+    int contador=0;
+    bool ingresa=false;
+    string usuario, config0, config1, config2, contra, numU;
+    fstream config;
+    int datos=0;
+    config.open("seguridad.dat",ios::in|ios::binary);
+    if(!config){
+        cout<<"\n\n\t\tError, no se encuentra un archivo escencial del programa...\a\n\n";
+        exit(1);
+    }
+    else{
+        cout << "\n\t\t\tBIENVENIDO AL PROGRAMA DEL EXAMEN FINAL\n" << endl;
+        cout << "\n\t\tIngrese el numero de usuario asignado: "; cin >> numU;
+        config>>config0>>config1>>config2;
+        while(!config.eof()){
+            if(numU==config0){
+                do{
+                    cout << "\n\t\tIngrese su usuario: "; cin >> usuario;
+                    cout << "\n\t\tIngrese su contrasena: ";
+                    char caracter;
+                    caracter = getch();
+                    contra="";
+                    while (caracter != 13) //ASCII TECLA ENTER
+                    {
+                        if (caracter != 8) //ASCII TECLA RETROCESO
+                        {
+                            contra.push_back(caracter);
+                            cout<<"*";
+                        } else
+                        {
+                            if (contra.length() > 0)
+                            {
+                                cout<<"\b \b"; //Efecto caracter borrado en pantalla
+                                contra = contra.substr(0,contra.length()-1); //Toma todos los caracteres menos el ultimo
+                            }
+                        }
+                        caracter = getch();
+                    }
+                    //instancia de clase USUARIOS, para consultar: primero se consulta el usuario, si existe, se consulta la contraseña
+                    if (usuario==config1 && contra==config2){
+                        system("cls");
+                        ingresa=true;
+                    } else {
+                        cout<<"\n\t\tEl usuario y/o contrasena son incorrectos\a"<<endl;
+                        cin.get();
+                        contador++;
+                    }
+                } while (ingresa==false && contador<3);
+                if (ingresa==false){
+                    cout<<"\n\t\tLo siento, no puede ingresar al sistema, agoto intentos"<<endl;
+                    cin.get();
+                } else {
+                    fstream bienvenida;
+                    string line, desicion;
+                    bienvenida.open("bienvenidos.txt");
+                    if(bienvenida.is_open()){
+                        cout << "\n";
+                        while( getline(bienvenida, line)){
+                            cout << "\t"<<line << endl;
+                        }
+                        cout<<"\n\t\t";system("pause");
+                        bienvenida.close();
+                    }
+                    bienvenida.close();
+                    laboratoriosMedicos prueba;
+                    prueba.menuPrincipal();
+                    cin.get();
+                }
+                return ingresa;
+                datos++;
+                config.close();
+            }
+            config>>config0>>config1>>config2;
+            config.close();
+        }
+        config.close();
+    }
+    config.close();
+};
