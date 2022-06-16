@@ -57,3 +57,9 @@ void laboratoriosMedicos::menuPrincipal(){
         }
     }
 }
+
+int main(){
+    laboratoriosMedicos prueba;
+    prueba.menuPrincipal();
+}
+//modBaseDatos<<std::left<<std::setw(20)<< documentoIdentificacion <<std::left<<std::setw(50)<< nombre <<std::left<<std::setw(10)<< edad <<std::left<<std::setw(20)<< correo <<std::left<<std::setw(15)<< telefono <<std::left<<std::setw(20)<< direccion << std::left<<std::setw(20)<< puesto << std::left<<std::setw(15)<< sueldo << "\n";
