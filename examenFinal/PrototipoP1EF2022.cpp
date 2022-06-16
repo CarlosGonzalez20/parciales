@@ -34,12 +34,17 @@ public:
         void eliminarExamen();
         void mostrarDatosExamen();
     void menuLaboratorios();
+        void registrarLaboratorio();
+        void modificarLaboratorio();
+        void eliminarLaboratorio();
+        void mostrarDatosLaboratorio();
 private:
     //estos string son para empleados y pacientes
-    string documentoIdentificacion, nombre, direccion, edad, tipoSangre, correo, telefono, puesto, sueldo, desicion, busquedaDatos;
+    string documentoIdentificacion, nombre, direccion, edad, tipoSangre, correo, telefono, puesto, sueldo, detallesSuceso, alergias, medicacionesPrevias, tipoLesion, desicion, busquedaDatos;
     //estos string son para los examenes medicos
     string numExa, nombreExa, abreviaturaExa, costo;
     //estos string son para los laboratorios (los pensé como si fueran sedes o algo similar)
+    string numLabo, nombreLabo, direccionLabo, telefonoLabo;
 };
 
 void laboratoriosMedicos::menuPrincipal(){
@@ -407,9 +412,13 @@ void laboratoriosMedicos::registrarPacientes(){
         cout << "\t\tIngrese el numero de telefono del paciente a registrar: (si no brinda informacion coloque ?) "; cin >> telefono;
         cout << "\t\tIngrese la direccion del paciente a registrar: (si no brinda informacion coloque ?) "; cin >> direccion;
         cout<<  "\t\tIngrese el tipo de sangre del paciente a registrar: "; cin>> tipoSangre;
+        cout<<  "\t\tIngrese detalles de los sucedido: "; cin>> detallesSuceso;
+        cout<<  "\t\tIngrese las alergias del paciente, si no tiene coloque ninguna: "; cin>> alergias;
+        cout<<  "\t\tIngrese las medicaciones que tiene el paciente: "; cin>> medicacionesPrevias;
+        cout<<  "\t\tIngrese el tipo de lesión, leve, intermedio o grave: "; cin>> tipoLesion;
         cout << "\n\t--Registro completado--\n" << endl;
         baseDatos.open("pacientes.dat",ios::app | ios::out | ios::binary);
-        baseDatos<<std::left<<std::setw(20)<< documentoIdentificacion <<std::left<<std::setw(50)<< nombre <<std::left<<std::setw(10)<< edad <<std::left<<std::setw(15)<< telefono <<std::left<<std::setw(20)<< direccion << std::left<<std::setw(10)<< tipoSangre << "\n";
+        baseDatos<<std::left<<std::setw(20)<< documentoIdentificacion <<std::left<<std::setw(50)<< nombre <<std::left<<std::setw(10)<< edad <<std::left<<std::setw(15)<< telefono <<std::left<<std::setw(20)<< direccion << std::left<<std::setw(10)<< tipoSangre << std::left<<std::setw(100)<< detallesSuceso << std::left<<std::setw(50)<< alergias << std::left<<std::setw(50)<< medicacionesPrevias << std::left<<std::setw(10)<< tipoLesion << "\n";
         baseDatos.close();
     }
     cout <<"\n\n\t\tRegresando al --MENU PACIENTES--";
@@ -437,10 +446,10 @@ void laboratoriosMedicos::modificarPacientes(){
         else {
             cout << "\n\t\t\tIngrese el numero de Documento de Identificacion del paciente que busca: "; cin >> busquedaDatos;
             modBaseDatos.open("temporalPacientes.dat",ios::app|ios::out|ios::binary);
-            baseDatos>>documentoIdentificacion>>nombre>>edad>>telefono>>direccion>>tipoSangre;
+            baseDatos>>documentoIdentificacion>>nombre>>edad>>telefono>>direccion>>tipoSangre>>detallesSuceso>>alergias>>medicacionesPrevias>>tipoLesion;
             while (!baseDatos.eof()){
                 if (busquedaDatos!=documentoIdentificacion){
-                    modBaseDatos<<std::left<<std::setw(20)<< documentoIdentificacion <<std::left<<std::setw(50)<< nombre <<std::left<<std::setw(10)<< edad <<std::left<<std::setw(15)<< telefono <<std::left<<std::setw(20)<< direccion << std::left<<std::setw(10)<< tipoSangre << "\n";
+                    modBaseDatos<<std::left<<std::setw(20)<< documentoIdentificacion <<std::left<<std::setw(50)<< nombre <<std::left<<std::setw(10)<< edad <<std::left<<std::setw(15)<< telefono <<std::left<<std::setw(20)<< direccion << std::left<<std::setw(10)<< tipoSangre << std::left<<std::setw(100)<< detallesSuceso << std::left<<std::setw(50)<< alergias << std::left<<std::setw(50)<< medicacionesPrevias << std::left<<std::setw(10)<< tipoLesion << "\n";
                 }
                 else {
                     cout << "\n\t\tIngrese el numero de documento de identificacion del paciente: "; cin >> documentoIdentificacion;
@@ -449,9 +458,14 @@ void laboratoriosMedicos::modificarPacientes(){
                     cout << "\t\tIngrese el numero de telefono del paciente a registrar: (si no brinda informacion coloque ?) "; cin >> telefono;
                     cout << "\t\tIngrese la direccion del paciente a registrar: (si no brinda informacion coloque ?) "; cin >> direccion;
                     cout<<  "\t\tIngrese el tipo de sangre del paciente a registrar: "; cin>> tipoSangre;
-                    modBaseDatos<<std::left<<std::setw(20)<< documentoIdentificacion <<std::left<<std::setw(50)<< nombre <<std::left<<std::setw(10)<< edad <<std::left<<std::setw(15)<< telefono <<std::left<<std::setw(20)<< direccion << std::left<<std::setw(10)<< tipoSangre << "\n";
+                    cout<<  "\t\tIngrese detalles de los sucedido: "; cin>> detallesSuceso;
+                    cout<<  "\t\tIngrese las alergias del paciente, si no tiene coloque ninguna: "; cin>> alergias;
+                    cout<<  "\t\tIngrese las medicaciones que tiene el paciente: "; cin>> medicacionesPrevias;
+                    cout<<  "\t\tIngrese el tipo de lesión, leve, intermedio o grave: "; cin>> tipoLesion;
+                    cout << "\n\t--Registro completado--\n" << endl;
+                    modBaseDatos<<std::left<<std::setw(20)<< documentoIdentificacion <<std::left<<std::setw(50)<< nombre <<std::left<<std::setw(10)<< edad <<std::left<<std::setw(15)<< telefono <<std::left<<std::setw(20)<< direccion << std::left<<std::setw(10)<< tipoSangre << std::left<<std::setw(100)<< detallesSuceso << std::left<<std::setw(50)<< alergias << std::left<<std::setw(50)<< medicacionesPrevias << std::left<<std::setw(10)<< tipoLesion << "\n";
                 }
-                baseDatos>>documentoIdentificacion>>nombre>>edad>>telefono>>direccion>>tipoSangre;
+                baseDatos>>documentoIdentificacion>>nombre>>edad>>telefono>>direccion>>tipoSangre>>detallesSuceso>>alergias>>medicacionesPrevias>>tipoLesion;
             }
             modBaseDatos.close();
             baseDatos.close();
@@ -496,20 +510,20 @@ void laboratoriosMedicos::eliminarPacientes(){
         {
             cout << "\n\t\tIngrese el numero de Documento de Identificacion del paciente que busca: "; cin >> busquedaDatos;
             modBaseDatos.open("temporalPacientes.dat", ios::app | ios::out | ios::binary);
-            baseDatos>>documentoIdentificacion>>nombre>>edad>>telefono>>direccion>>tipoSangre;
+            baseDatos>>documentoIdentificacion>>nombre>>edad>>telefono>>direccion>>tipoSangre>>detallesSuceso>>alergias>>medicacionesPrevias>>tipoLesion;
 
             while(!baseDatos.eof())
             {
                 if(busquedaDatos!=documentoIdentificacion)
                 {
-                    modBaseDatos<<std::left<<std::setw(20)<< documentoIdentificacion <<std::left<<std::setw(50)<< nombre <<std::left<<std::setw(10)<< edad <<std::left<<std::setw(15)<< telefono <<std::left<<std::setw(20)<< direccion << std::left<<std::setw(10)<< tipoSangre << "\n";
+                    modBaseDatos<<std::left<<std::setw(20)<< documentoIdentificacion <<std::left<<std::setw(50)<< nombre <<std::left<<std::setw(10)<< edad <<std::left<<std::setw(15)<< telefono <<std::left<<std::setw(20)<< direccion << std::left<<std::setw(10)<< tipoSangre << std::left<<std::setw(100)<< detallesSuceso << std::left<<std::setw(50)<< alergias << std::left<<std::setw(50)<< medicacionesPrevias << std::left<<std::setw(10)<< tipoLesion << "\n";
                 }
                 else
                 {
                     found++;
                     cout << "\n\t\t\tBorrado de informacion exitoso\a";
                 }
-                baseDatos>>documentoIdentificacion>>nombre>>edad>>telefono>>direccion>>tipoSangre;
+                baseDatos>>documentoIdentificacion>>nombre>>edad>>telefono>>direccion>>tipoSangre>>detallesSuceso>>alergias>>medicacionesPrevias>>tipoLesion;
             }
             if(found==0)
             {
@@ -561,7 +575,7 @@ void laboratoriosMedicos::mostrarDatosPacientes(){
             {
                 cout << "\n\t\t\tEntrando en el menu --BUSCAR--"<<endl;
                 cout << "\n\t\tIngrese el numero del Documento de Identificacion del paciente a buscar: "; cin >> busquedaDatos;
-                baseDatos>>documentoIdentificacion>>nombre>>edad>>telefono>>direccion>>tipoSangre;
+                baseDatos>>documentoIdentificacion>>nombre>>edad>>telefono>>direccion>>tipoSangre>>detallesSuceso>>alergias>>medicacionesPrevias>>tipoLesion;
                 while(!baseDatos.eof()){
                     if(busquedaDatos==documentoIdentificacion){
                         cout<<"\n\t\tDocumento de Identificacion: "<< documentoIdentificacion;
@@ -570,6 +584,10 @@ void laboratoriosMedicos::mostrarDatosPacientes(){
                         cout<<"\n\t\tTelefono: "<< telefono;
                         cout<<"\n\t\tDireccion: "<< direccion;
                         cout<<"\n\t\tTipo de Sangre: "<< tipoSangre;
+                        cout<<  "\t\tdetalles de los sucedido: "; cin>> detallesSuceso;
+                        cout<<  "\t\talergias del paciente: "; cin>> alergias;
+                        cout<<  "\t\tmedicaciones que tiene el paciente: "; cin>> medicacionesPrevias;
+                        cout<<  "\t\ttipo de lesión: "; cin>> tipoLesion;
                         datos++;
                         if (baseDatos.is_open()){
                             baseDatos.close();
@@ -578,7 +596,7 @@ void laboratoriosMedicos::mostrarDatosPacientes(){
                         cout<<"\n\t";system("pause");
                         return menuPacientes();
                     }
-                    baseDatos>>documentoIdentificacion>>nombre>>edad>>telefono>>direccion>>tipoSangre;
+                    baseDatos>>documentoIdentificacion>>nombre>>edad>>telefono>>direccion>>tipoSangre>>detallesSuceso>>alergias>>medicacionesPrevias>>tipoLesion;
                 }
                 if(datos==0)
                 {
@@ -621,7 +639,11 @@ void laboratoriosMedicos::mostrarDatosPacientes(){
                     cout<<"\n\t\tTelefono: "<< telefono;
                     cout<<"\n\t\tDireccion: "<< direccion;
                     cout<<"\n\t\tTipo de Sangre: "<< tipoSangre;
-                    baseDatos>>documentoIdentificacion>>nombre>>edad>>telefono>>direccion>>tipoSangre;
+                    cout<<  "\t\tdetalles de los sucedido: "; cin>> detallesSuceso;
+                    cout<<  "\t\talergias del paciente: "; cin>> alergias;
+                    cout<<  "\t\tmedicaciones que tiene el paciente: "; cin>> medicacionesPrevias;
+                    cout<<  "\t\ttipo de lesión: "; cin>> tipoLesion;
+                    baseDatos>>documentoIdentificacion>>nombre>>edad>>telefono>>direccion>>tipoSangre>>detallesSuceso>>alergias>>medicacionesPrevias>>tipoLesion;
                     //if (baseDatos.is_open()){
                       //  baseDatos.close();
                         //cout<<"\n\n\t\tArchivo cerrado";}
@@ -698,7 +720,7 @@ void laboratoriosMedicos::registrarExamen(){
     return menuExamenes();
 }
 
-void laboratoriosMedicos::modificarPacientes(){
+void laboratoriosMedicos::modificarExamen(){
     system("cls");
     fstream baseDatos, modBaseDatos;
     cout << "\n\t\t\tEntrando al menu --MODIFICAR EXAMENES--" << endl;
@@ -718,7 +740,7 @@ void laboratoriosMedicos::modificarPacientes(){
         else {
             cout << "\n\t\t\tIngrese el numero del examen que busca: "; cin >> busquedaDatos;
             modBaseDatos.open("temporalExamenes.dat",ios::app|ios::out|ios::binary);
-            baseDatos>>numExa,nombreExa,abreviaturaExa,costo;
+            baseDatos>>numExa>>nombreExa>>abreviaturaExa>>costo;
             while (!baseDatos.eof()){
                 if (busquedaDatos!=documentoIdentificacion){
                     modBaseDatos<<std::left<<std::setw(20)<< numExa <<std::left<<std::setw(50)<< nombreExa <<std::left<<std::setw(10)<< abreviaturaExa <<std::left<<std::setw(15)<< costo << "\n";
@@ -730,7 +752,7 @@ void laboratoriosMedicos::modificarPacientes(){
                     cout << "\t\tIngrese el costo del Examen: "; cin >> costo;
                     modBaseDatos<<std::left<<std::setw(20)<< numExa <<std::left<<std::setw(50)<< nombreExa <<std::left<<std::setw(10)<< abreviaturaExa <<std::left<<std::setw(15)<< costo << "\n";
                 }
-                baseDatos>>numExa>>nombreExa>>abreviaturaExa,costo;
+                baseDatos>>numExa>>nombreExa>>abreviaturaExa>>costo;
             }
             modBaseDatos.close();
             baseDatos.close();
@@ -896,7 +918,7 @@ void laboratoriosMedicos::mostrarDatosExamen(){
                     cout<<"\n\t\tNombre del Examen: " << nombre;
                     cout<<"\n\t\tAbreviatura del Examen: "<< abreviaturaExa;
                     cout<<"\n\t\tCosto del Examen: "<< costo;
-                    baseDatos>>numExa>>nombreExa>>abreviaturaExa>>costo>>;
+                    baseDatos>>numExa>>nombreExa>>abreviaturaExa>>costo;
                     //if (baseDatos.is_open()){
                       //  baseDatos.close();
                         //cout<<"\n\n\t\tArchivo cerrado";}
@@ -925,7 +947,278 @@ void laboratoriosMedicos::mostrarDatosExamen(){
 }
 
 void laboratoriosMedicos::menuLaboratorios(){
-    cout<<"hola";
+    system("cls");
+    int menu;
+    cout << "\n\t\tBienvenido al --MENU LABORATORIOS--" << endl;
+    cout << "\n\t\tElija el numero del menu al que quiere ingresar\n" << endl << "\t\t[1] Registrar Laboratorio\n" << "\t\t[2] Modificar Laboratorio\n" <<  "\t\t[3] Eliminar Laboratorio\n" << "\t\t[4] Mostrar todos los Laboratorios\n" << "\t\t[5] Salir al --MENU PRINCIPAL--\n";cout<<"\n\t\t"; cin >> menu;
+    switch (menu){
+    case 1:
+        registrarLaboratorio();
+        break;
+    case 2:
+        modificarLaboratorio();
+        break;
+    case 3:
+        eliminarLaboratorio();
+        break;
+    case 4:
+        mostrarDatosLaboratorio();
+        break;
+    case 5:
+        cout << "\n\tSaliendo al --MENU PRINCIPAL--" << endl;
+        cout<<"\t";system ("pause");
+        return menuPrincipal();
+        break;
+    }
+}
+
+void laboratoriosMedicos::registrarLaboratorio(){
+    system("cls");
+    fstream baseDatos;
+    cout << "\n\t\t\tEntrando al menu --REGISTRAR LABORATORIOS--\n" << endl;
+    cout << "\n\t Quires salir al --MENU lABORATORIO--? [ si / no ] : "; cin >> desicion;
+    if (desicion=="si"){
+        return menuLaboratorios();
+    }
+    else {
+        cout << "\n\t\tIngrese el numero del Laboratorio: "; cin >> numLabo;
+        cout << "\t\tIngrese el nombre del Laboratorio a registrar: "; cin >> nombreLabo;
+        cout << "\t\tIngrese el numero de telefono del Laboratorio a registrar: "; cin >> telefonoLabo;
+        cout << "\t\tIngrese la direccion del Laboratorio a registrar: "; cin >> direccionLabo;
+        cout << "\n\t--Registro completado--\n" << endl;
+        baseDatos.open("laboratorios.dat",ios::app | ios::out | ios::binary);
+        baseDatos<<std::left<<std::setw(20)<< numLabo <<std::left<<std::setw(50)<< nombreLabo <<std::left<<std::setw(15)<< telefonoLabo <<std::left<<std::setw(20)<< direccionLabo << "\n";
+        baseDatos.close();
+    }
+    cout <<"\n\n\t\tRegresando al --MENU LABORATORIOS--";
+    cout<<"\n\t";system("pause");
+    return menuLaboratorios();
+}
+
+void laboratoriosMedicos::modificarLaboratorio(){
+    system("cls");
+    fstream baseDatos, modBaseDatos;
+    cout << "\n\t\t\tEntrando al menu --MODIFICAR LABORATORIOS--" << endl;
+    cout << "\n\t Quires salir al --MENU LABORATORIOS--? [ si / no ] : "; cin >> desicion;
+    if (desicion=="si"){
+        return menuLaboratorios();
+    }
+    else{
+        baseDatos.open("laboratorios.dat",ios::app|ios::in|ios::binary);
+        if(!baseDatos){
+            cout << "\n\t\tNo se encontro el archivo" << endl;
+            baseDatos.close();
+            cout <<"\n\n\t\t\tRegresando al --MENU LABORATORIOS--";
+            cout<<"\n\t";system("pause");
+            return menuLaboratorios();
+        }
+        else {
+            cout << "\n\t\t\tIngrese el numero del laboratorio que busca: "; cin >> busquedaDatos;
+            modBaseDatos.open("temporalLaboratorios.dat",ios::app|ios::out|ios::binary);
+            baseDatos>>numLabo>>nombreLabo>>telefonoLabo>>direccionLabo;
+            while (!baseDatos.eof()){
+                if (busquedaDatos!=documentoIdentificacion){
+                    modBaseDatos<<std::left<<std::setw(20)<< numLabo <<std::left<<std::setw(50)<< nombreLabo <<std::left<<std::setw(10)<< telefonoLabo <<std::left<<std::setw(15)<< direccionLabo << "\n";
+                }
+                else {
+                    cout << "\n\t\tIngrese el numero del laboratorio: "; cin >> numLabo;
+                    cout << "\t\tIngrese el nombre del laboratorio: "; cin >> nombreLabo;
+                    cout << "\t\tIngrese el telefono del laboratorio: "; cin >> telefonoLabo;
+                    cout << "\t\tIngrese la direccion del laboratorio: "; cin >> direccionLabo;
+                    modBaseDatos<<std::left<<std::setw(20)<< numLabo <<std::left<<std::setw(50)<< nombreLabo <<std::left<<std::setw(10)<< telefonoLabo <<std::left<<std::setw(15)<< direccionLabo << "\n";
+                }
+                baseDatos>>numLabo>>nombreLabo>>telefonoLabo>>direccionLabo;
+            }
+            modBaseDatos.close();
+            baseDatos.close();
+        if (baseDatos.is_open())
+            baseDatos.close();
+        if (modBaseDatos.is_open())
+            modBaseDatos.close();
+
+        if( remove( "laboratorios.dat" ) != 0 )
+            perror( "\n\t\tError deleting file" );
+        else
+            puts( "\n\t\tFile successfully deleted" );
+
+        if (rename("temporalLaboratorios.dat","laboratorios.dat") != 0)
+            perror("\n\t\tError renaming file");
+        else
+            cout << "\n\t\tFile renamed successfully";
+        }
+        cout <<"\n\n\t\tRegresando al --MENU LABORATORIOS--";
+        cout<<"\n\t";system("pause");
+        return menuLaboratorios();
+    }
+}
+
+void laboratoriosMedicos::eliminarLaboratorio(){
+    system("cls");
+	fstream baseDatos,modBaseDatos;
+	int found=0;
+	cout << "\n\t\t\tEntrando al menu --ELIMINAR LABORATORIO--" << endl;
+	cout << "\n\t Quires salir al --MENU LABORATORIO--? [ si / no ] : "; cin >> desicion;
+    if (desicion=="si"){
+        return menuLaboratorios();
+    }
+    else {
+        baseDatos.open("laboratorios.dat",ios::app|ios::in|ios::binary);
+        if(!baseDatos)
+        {
+            cout<<"\n\t\t\tNo hay informacion...\a";
+            baseDatos.close();
+        }
+        else
+        {
+            cout << "\n\t\tIngrese el numero del Laboratorio que busca: "; cin >> busquedaDatos;
+            modBaseDatos.open("temporalLaboratorios.dat", ios::app | ios::out | ios::binary);
+            baseDatos>>numLabo>>nombreLabo>>telefonoLabo>>direccionLabo;
+
+            while(!baseDatos.eof())
+            {
+                if(busquedaDatos!=documentoIdentificacion)
+                {
+                    modBaseDatos<<std::left<<std::setw(20)<< numLabo <<std::left<<std::setw(50)<< nombreLabo <<std::left<<std::setw(10)<< telefonoLabo <<std::left<<std::setw(15)<< direccionLabo << "\n";
+                }
+                else
+                {
+                    found++;
+                    cout << "\n\t\t\tBorrado de informacion exitoso\a";
+                }
+                baseDatos>>numLabo>>nombreLabo>>telefonoLabo>>direccionLabo;
+            }
+            if(found==0)
+            {
+                cout<<"\n\t\t\t Laboratorio no encontrado...\a";
+            }
+            baseDatos.close();
+            modBaseDatos.close();
+        if (baseDatos.is_open())
+            baseDatos.close();
+        if (modBaseDatos.is_open())
+            modBaseDatos.close();
+
+        if( remove( "laboratorios.dat" ) != 0 )
+            perror( "\n\t\tError deleting file" );
+        else
+            puts( "\n\t\tFile successfully deleted" );
+
+        if (rename("temporalLaboratorios.dat","laboratorios.dat") != 0)
+            perror("\n\t\tError renaming file");
+        else
+            cout << "\n\t\tFile renamed successfully";
+        }
+        cout <<"\n\n\t\t\tRegresando al --MENU LABORATORIOS--";
+        cout<<"\n\t";system("pause");
+        return menuLaboratorios();
+    }
+}
+
+void laboratoriosMedicos::mostrarDatosLaboratorio(){
+    system("cls");
+    fstream baseDatos;
+    cout << "\n\t\t\tEntrando al --MENU MOSTRAR TODOS LOS LABORATORIOS--";
+    cout << "\n\t Quires salir al --MENU LABORATORIOS--? [ si / no ] : "; cin >> desicion;
+    if (desicion=="si"){
+        return menuLaboratorios();
+    }
+    else {
+        cout << "\n\n\t\t Quiere buscar a un Laboratorio en especifico? [ si / no ] : "; cin>>desicion;
+        if (desicion=="si"){
+            int datos=0;
+            baseDatos.open("laboratorios.dat",ios::app|ios::in|ios::binary);
+            if(!baseDatos)
+            {
+                cout<<"\n\t\tError";
+                cout<<"\n\t\t\tNo se encontro el archivo, asegurese de que el archivo este en la misma carpeta que el programa";
+                baseDatos.close();
+            }
+            else
+            {
+                cout << "\n\t\t\tEntrando en el menu --BUSCAR--"<<endl;
+                cout << "\n\t\tIngrese el numero del Laboratorio a buscar: "; cin >> busquedaDatos;
+                baseDatos>>numLabo>>nombreLabo>>telefonoLabo>>direccionLabo;
+                while(!baseDatos.eof()){
+                    if(busquedaDatos==documentoIdentificacion){
+                        cout<<"\n\t\tNumero del Laboratorio: "<< numLabo;
+                        cout<<"\n\t\tNombre del Laboratorio: "<< nombreLabo;
+                        cout<<"\n\t\tTelefono del Laboratorio: "<< telefonoLabo;
+                        cout<<"\n\t\tDireccion del Laboratorio: "<< direccionLabo;
+                        datos++;
+                        if (baseDatos.is_open()){
+                            baseDatos.close();
+                            cout<<"\n\n\t\tArchivo cerrado";}
+                        cout<<"\n\n\t\t\tRegresando al --MENU LABORATORIOS--";
+                        cout<<"\n\t";system("pause");
+                        return menuLaboratorios();
+                    }
+                    baseDatos>>numLabo>>nombreLabo>>telefonoLabo>>direccionLabo;
+                }
+                if(datos==0)
+                {
+                    cout<<"\n\t\t\tNo se encontro ninguna coincidencia, intentelo de nuevo";
+                    cout <<"\n\n\t\t\tRegresando al --MENU MOSTRAR DATOS LABORATORIOS--";
+                    cout<<"\n\t";system("pause");
+                    return mostrarDatosLaboratorio();
+                    if (baseDatos.is_open()){
+                        baseDatos.close();
+                        cout<<"\n\n\t\tArchivo cerrado";}
+                }
+            }
+            if (baseDatos.is_open()){
+                baseDatos.close();
+                cout<<"\n\n\t\tArchivo cerrado";}
+        }
+        else {
+            fstream baseDatos;
+            int total=0;
+            cout<<"\n\t\t\tEntrando al --MENU MOSTRAR DATOS LABORATORIOS"<<endl;
+            baseDatos.open("laboratorios.dat",ios::app|ios::in|ios::binary);
+            if(!baseDatos){
+                cout<<"\n\t\t\tError\n\t\t\tNo se encontro el archivo, asegurese de que el archivo se encuentre en la misma carpeta del programa";
+                if (baseDatos.is_open()){
+                    baseDatos.close();
+                    cout<<"\n\n\t\tArchivo cerrado";}
+                cout <<"\n\n\t\t\tRegresando al --MENU LABORATORIOS--";
+                cout<<"\n\t";system("pause");
+                return menuLaboratorios();
+            }
+            else
+            {
+                baseDatos>>numLabo>>nombreLabo>>telefonoLabo>>direccionLabo;
+                while(!baseDatos.eof())
+                {
+                    total++;
+                    cout<<"\n\n\t\tNumero del Laboratorio: "<< numLabo;
+                    cout<<"\n\t\tNombre del Laboratorio: " << nombreLabo;
+                    cout<<"\n\t\tTelefono del Laboratorio: "<< telefonoLabo;
+                    cout<<"\n\t\tDireccion del Laboratorio: "<< direccionLabo;
+                    baseDatos>>numLabo>>nombreLabo>>telefonoLabo>>direccionLabo;
+                    //if (baseDatos.is_open()){
+                      //  baseDatos.close();
+                        //cout<<"\n\n\t\tArchivo cerrado";}
+                }
+                if(total==0){
+                    cout<<"\n\t\t\tEl archivo se encuentra vacio...";
+                    //if (baseDatos.is_open()){
+                      //  baseDatos.close();
+                        //cout<<"\n\n\t\tArchivo cerrado";}
+                }
+                if (baseDatos.is_open()){
+                    baseDatos.close();
+                    cout<<"\n\n\t\tArchivo cerrado";}
+                cout <<"\n\n\t\tRegresando al --MENU LABORATORIOS--";
+                cout<<"\n\t";system("pause");
+                return menuLaboratorios();
+            }
+            if (baseDatos.is_open()){
+                baseDatos.close();
+                cout<<"\n\n\t\tArchivo cerrado";}
+        }
+        if (baseDatos.is_open()){
+            baseDatos.close();
+            cout<<"\n\n\t\tArchivo cerrado";}
+    }
 }
 
 int main(){
