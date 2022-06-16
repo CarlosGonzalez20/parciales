@@ -29,9 +29,17 @@ public:
         void eliminarPacientes();
         void mostrarDatosPacientes();
     void menuExamenes();
+        void registrarExamen();
+        void modificarExamen();
+        void eliminarExamen();
+        void mostrarDatosExamen();
     void menuLaboratorios();
 private:
+    //estos string son para empleados y pacientes
     string documentoIdentificacion, nombre, direccion, edad, tipoSangre, correo, telefono, puesto, sueldo, desicion, busquedaDatos;
+    //estos string son para los examenes medicos
+    string numExa, nombreExa, abreviaturaExa, costo;
+    //estos string son para los laboratorios (los pensé como si fueran sedes o algo similar)
 };
 
 void laboratoriosMedicos::menuPrincipal(){
@@ -642,7 +650,278 @@ void laboratoriosMedicos::mostrarDatosPacientes(){
 }
 
 void laboratoriosMedicos::menuExamenes(){
-    cout<<"hola";
+    system("cls");
+    int menu;
+    cout << "\n\t\tBienvenido al --MENU EXAMENES--" << endl;
+    cout << "\n\t\tElija el numero del menu al que quiere ingresar\n" << endl << "\t\t[1] Registrar Examen\n" << "\t\t[2] Modificar Examen\n" <<  "\t\t[3] Eliminar Examen\n" << "\t\t[4] Mostrar todos los Examenes\n" << "\t\t[5] Salir al --MENU PRINCIPAL--\n";cout<<"\n\t\t"; cin >> menu;
+    switch (menu){
+    case 1:
+        registrarExamen();
+        break;
+    case 2:
+        modificarExamen();
+        break;
+    case 3:
+        eliminarExamen();
+        break;
+    case 4:
+        mostrarDatosExamen();
+        break;
+    case 5:
+        cout << "\n\tSaliendo al --MENU PRINCIPAL--" << endl;
+        cout<<"\t";system ("pause");
+        return menuPrincipal();
+        break;
+    }
+}
+
+void laboratoriosMedicos::registrarExamen(){
+    system("cls");
+    fstream baseDatos;
+    cout << "\n\t\t\tEntrando al menu --REGISTRAR EXAMEN MEDICO--\n" << endl;
+    cout << "\n\t Quires salir al --MENU EXAMENES--? [ si / no ] : "; cin >> desicion;
+    if (desicion=="si"){
+        return menuExamenes();
+    }
+    else {
+        cout << "\n\t\tIngrese el numero del Examen: "; cin >> numExa;
+        cout << "\t\tIngrese el nombre del Examen: "; cin >> nombreExa;
+        cout << "\t\tIngrese la abreviatura del nombre del Examen: "; cin >> abreviaturaExa;
+        cout << "\t\tIngrese el costo del Examen: "; cin >> costo;
+        cout << "\n\t--Registro completado--\n" << endl;
+        baseDatos.open("examenes.dat",ios::app | ios::out | ios::binary);
+        baseDatos<<std::left<<std::setw(20)<< numExa <<std::left<<std::setw(50)<< nombreExa <<std::left<<std::setw(10)<< abreviaturaExa <<std::left<<std::setw(15)<< costo << "\n";
+        baseDatos.close();
+    }
+    cout <<"\n\n\t\tRegresando al --MENU EXAMENES--";
+    cout<<"\n\t";system("pause");
+    return menuExamenes();
+}
+
+void laboratoriosMedicos::modificarPacientes(){
+    system("cls");
+    fstream baseDatos, modBaseDatos;
+    cout << "\n\t\t\tEntrando al menu --MODIFICAR EXAMENES--" << endl;
+    cout << "\n\t Quires salir al --MENU EXAMENES--? [ si / no ] : "; cin >> desicion;
+    if (desicion=="si"){
+        return menuExamenes();
+    }
+    else{
+        baseDatos.open("examenes.dat",ios::app|ios::in|ios::binary);
+        if(!baseDatos){
+            cout << "\n\t\tNo se encontro el archivo" << endl;
+            baseDatos.close();
+            cout <<"\n\n\t\t\tRegresando al --MENU EXAMENES--";
+            cout<<"\n\t";system("pause");
+            return menuExamenes();
+        }
+        else {
+            cout << "\n\t\t\tIngrese el numero del examen que busca: "; cin >> busquedaDatos;
+            modBaseDatos.open("temporalExamenes.dat",ios::app|ios::out|ios::binary);
+            baseDatos>>numExa,nombreExa,abreviaturaExa,costo;
+            while (!baseDatos.eof()){
+                if (busquedaDatos!=documentoIdentificacion){
+                    modBaseDatos<<std::left<<std::setw(20)<< numExa <<std::left<<std::setw(50)<< nombreExa <<std::left<<std::setw(10)<< abreviaturaExa <<std::left<<std::setw(15)<< costo << "\n";
+                }
+                else {
+                    cout << "\n\t\tIngrese el numero del Examen: "; cin >> numExa;
+                    cout << "\t\tIngrese el nombre del Examen: "; cin >> nombreExa;
+                    cout << "\t\tIngrese la abreviatura del Examen: "; cin >> abreviaturaExa;
+                    cout << "\t\tIngrese el costo del Examen: "; cin >> costo;
+                    modBaseDatos<<std::left<<std::setw(20)<< numExa <<std::left<<std::setw(50)<< nombreExa <<std::left<<std::setw(10)<< abreviaturaExa <<std::left<<std::setw(15)<< costo << "\n";
+                }
+                baseDatos>>numExa>>nombreExa>>abreviaturaExa,costo;
+            }
+            modBaseDatos.close();
+            baseDatos.close();
+        if (baseDatos.is_open())
+            baseDatos.close();
+        if (modBaseDatos.is_open())
+            modBaseDatos.close();
+
+        if( remove( "examenes.dat" ) != 0 )
+            perror( "\n\t\tError deleting file" );
+        else
+            puts( "\n\t\tFile successfully deleted" );
+
+        if (rename("temporalExamenes.dat","examenes.dat") != 0)
+            perror("\n\t\tError renaming file");
+        else
+            cout << "\n\t\tFile renamed successfully";
+        }
+        cout <<"\n\n\t\tRegresando al --MENU EXAMENES--";
+        cout<<"\n\t";system("pause");
+        return menuExamenes();
+    }
+}
+
+void laboratoriosMedicos::eliminarExamen(){
+    system("cls");
+	fstream baseDatos,modBaseDatos;
+	int found=0;
+	cout << "\n\t\t\tEntrando al menu --ELIMINAR EXAMEN--" << endl;
+	cout << "\n\t Quires salir al --MENU EXAMEN--? [ si / no ] : "; cin >> desicion;
+    if (desicion=="si"){
+        return menuExamenes();
+    }
+    else {
+        baseDatos.open("examenes.dat",ios::app|ios::in|ios::binary);
+        if(!baseDatos)
+        {
+            cout<<"\n\t\t\tNo hay informacion...\a";
+            baseDatos.close();
+        }
+        else
+        {
+            cout << "\n\t\tIngrese el numero del Examen que busca: "; cin >> busquedaDatos;
+            modBaseDatos.open("temporalExamenes.dat", ios::app | ios::out | ios::binary);
+            baseDatos>>numExa>>nombreExa>>abreviaturaExa>>costo;
+
+            while(!baseDatos.eof())
+            {
+                if(busquedaDatos!=documentoIdentificacion)
+                {
+                    modBaseDatos<<std::left<<std::setw(20)<< numExa <<std::left<<std::setw(50)<< nombreExa <<std::left<<std::setw(10)<< abreviaturaExa <<std::left<<std::setw(15)<< costo << "\n";
+                }
+                else
+                {
+                    found++;
+                    cout << "\n\t\t\tBorrado de informacion exitoso\a";
+                }
+                baseDatos>>numExa>>nombreExa>>abreviaturaExa>>costo;
+            }
+            if(found==0)
+            {
+                cout<<"\n\t\t\t Examen no encontrado...\a";
+            }
+            baseDatos.close();
+            modBaseDatos.close();
+        if (baseDatos.is_open())
+            baseDatos.close();
+        if (modBaseDatos.is_open())
+            modBaseDatos.close();
+
+        if( remove( "examenes.dat" ) != 0 )
+            perror( "\n\t\tError deleting file" );
+        else
+            puts( "\n\t\tFile successfully deleted" );
+
+        if (rename("temporalExamenes.dat","examenes.dat") != 0)
+            perror("\n\t\tError renaming file");
+        else
+            cout << "\n\t\tFile renamed successfully";
+        }
+        cout <<"\n\n\t\t\tRegresando al --MENU PACIENTES--";
+        cout<<"\n\t";system("pause");
+        return menuPacientes();
+    }
+}
+
+void laboratoriosMedicos::mostrarDatosExamen(){
+    system("cls");
+    fstream baseDatos;
+    cout << "\n\t\t\tEntrando al --MENU MOSTRAR TODOS LOS EXAMENES--";
+    cout << "\n\t Quires salir al --MENU EXAMENES--? [ si / no ] : "; cin >> desicion;
+    if (desicion=="si"){
+        return menuExamenes();
+    }
+    else {
+        cout << "\n\n\t\t Quiere buscar a un Examen en especifico? [ si / no ] : "; cin>>desicion;
+        if (desicion=="si"){
+            int datos=0;
+            baseDatos.open("examenes.dat",ios::app|ios::in|ios::binary);
+            if(!baseDatos)
+            {
+                cout<<"\n\t\tError";
+                cout<<"\n\t\t\tNo se encontro el archivo, asegurese de que el archivo este en la misma carpeta que el programa";
+                baseDatos.close();
+            }
+            else
+            {
+                cout << "\n\t\t\tEntrando en el menu --BUSCAR--"<<endl;
+                cout << "\n\t\tIngrese el numero del Examen a buscar: "; cin >> busquedaDatos;
+                baseDatos>>numExa>>nombreExa>>abreviaturaExa>>costo;
+                while(!baseDatos.eof()){
+                    if(busquedaDatos==documentoIdentificacion){
+                        cout<<"\n\t\tNumero del Examen: "<< numExa;
+                        cout<<"\n\t\tNombre del Examen: " << nombre;
+                        cout<<"\n\t\tAbreviatura del Examen: "<< abreviaturaExa;
+                        cout<<"\n\t\tCosto del Examen: "<< costo;
+                        datos++;
+                        if (baseDatos.is_open()){
+                            baseDatos.close();
+                            cout<<"\n\n\t\tArchivo cerrado";}
+                        cout<<"\n\n\t\t\tRegresando al --MENU EXAMENES--";
+                        cout<<"\n\t";system("pause");
+                        return menuExamenes();
+                    }
+                    baseDatos>>numExa>>nombreExa>>abreviaturaExa>>costo;
+                }
+                if(datos==0)
+                {
+                    cout<<"\n\t\t\tNo se encontro ninguna coincidencia, intentelo de nuevo";
+                    cout <<"\n\n\t\t\tRegresando al --MENU MOSTRAR DATOS EXAMENES--";
+                    cout<<"\n\t";system("pause");
+                    return mostrarDatosExamen();
+                    if (baseDatos.is_open()){
+                        baseDatos.close();
+                        cout<<"\n\n\t\tArchivo cerrado";}
+                }
+            }
+            if (baseDatos.is_open()){
+                baseDatos.close();
+                cout<<"\n\n\t\tArchivo cerrado";}
+        }
+        else {
+            fstream baseDatos;
+            int total=0;
+            cout<<"\n\t\t\tEntrando al --MENU MOSTRAR DATOS EXAMENES"<<endl;
+            baseDatos.open("examenes.dat",ios::app|ios::in|ios::binary);
+            if(!baseDatos){
+                cout<<"\n\t\t\tError\n\t\t\tNo se encontro el archivo, asegurese de que el archivo se encuentre en la misma carpeta del programa";
+                if (baseDatos.is_open()){
+                    baseDatos.close();
+                    cout<<"\n\n\t\tArchivo cerrado";}
+                cout <<"\n\n\t\t\tRegresando al --MENU EXAMENES--";
+                cout<<"\n\t";system("pause");
+                return menuExamenes();
+            }
+            else
+            {
+                baseDatos>>numExa>>nombreExa>>abreviaturaExa>>costo;
+                while(!baseDatos.eof())
+                {
+                    total++;
+                    cout<<"\n\n\t\tNumero del Examen: "<< numExa;
+                    cout<<"\n\t\tNombre del Examen: " << nombre;
+                    cout<<"\n\t\tAbreviatura del Examen: "<< abreviaturaExa;
+                    cout<<"\n\t\tCosto del Examen: "<< costo;
+                    baseDatos>>numExa>>nombreExa>>abreviaturaExa>>costo>>;
+                    //if (baseDatos.is_open()){
+                      //  baseDatos.close();
+                        //cout<<"\n\n\t\tArchivo cerrado";}
+                }
+                if(total==0){
+                    cout<<"\n\t\t\tEl archivo se encuentra vacio...";
+                    //if (baseDatos.is_open()){
+                      //  baseDatos.close();
+                        //cout<<"\n\n\t\tArchivo cerrado";}
+                }
+                if (baseDatos.is_open()){
+                    baseDatos.close();
+                    cout<<"\n\n\t\tArchivo cerrado";}
+                cout <<"\n\n\t\tRegresando al --MENU EXAMENES--";
+                cout<<"\n\t";system("pause");
+                return menuExamenes();
+            }
+            if (baseDatos.is_open()){
+                baseDatos.close();
+                cout<<"\n\n\t\tArchivo cerrado";}
+        }
+        if (baseDatos.is_open()){
+            baseDatos.close();
+            cout<<"\n\n\t\tArchivo cerrado";}
+    }
 }
 
 void laboratoriosMedicos::menuLaboratorios(){
